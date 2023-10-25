@@ -43,4 +43,16 @@ class Student : Person
         string contactInfo = Console.ReadLine();               
         return new Student(studentID, name, contactInfo);
     }
+    
+    public Student Edit()
+    {
+        Console.WriteLine("Edit information:");
+        Console.Write("ID: ");
+        int id = int.Parse(Console.ReadLine());
+        Console.Write("Name: ");
+        string name = Console.ReadLine();
+        Console.Write("ContactInfo");
+        string contactInfo = Console.ReadLine();
+        return new Student(id, name, contactInfo);
+    }
 }

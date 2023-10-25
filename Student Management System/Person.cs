@@ -16,18 +16,8 @@ class Person
 
     public void DisplayInfo()
     {
-        Console.WriteLine($"ID: {Id}\nName: {Name}\nContact Info: {ContactInfo}");
-    }
-
-    public Person Edit()
-    {
-        Console.WriteLine("Edit information:");
-        Console.Write("ID: ");
-        int id = int.Parse(Console.ReadLine());
-        Console.WriteLine("Name: ");
-        string name = Console.ReadLine();
-        Console.WriteLine("ContactInfo");
-        string contactInfo = Console.ReadLine();
-        return new Person(id, name, contactInfo);
-    }
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
+        Console.ResetColor();
+    }    
 }

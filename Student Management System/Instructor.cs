@@ -20,4 +20,15 @@ class Instructor : Person
 
         return new Instructor(instructorID, name, contactInfo);
     }
+    public Instructor Edit()
+    {
+        Console.WriteLine("--Edit instructor information--");
+        Console.Write("New ID: ");
+        int id = int.Parse(Console.ReadLine());
+        Console.WriteLine("New Name: ");
+        string name = Console.ReadLine();
+        Console.WriteLine("New ContactInfo");
+        string contactInfo = Console.ReadLine();
+        return new Instructor(id, name, contactInfo);
+    }
 }

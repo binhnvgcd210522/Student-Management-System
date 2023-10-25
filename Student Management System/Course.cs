@@ -45,12 +45,5 @@ class Course
         }
     }
 
-    public static Course Edit()
-    {
-        Console.WriteLine("--Edit Course--");
-        Console.WriteLine("New ID: ");
-        int courseID = int.Parse(Console.ReadLine());
-        Console.WriteLine("New Instructor");
-        return;
-    }
+    
 }

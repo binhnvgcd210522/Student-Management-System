@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Student_Management_System;
+using System;
 using System.Collections.Generic;
 
-class Student : Person
+class Student : Person, EditPerson
 {    
     public List<Course> Courses { get; set; } = new List<Course>();
 

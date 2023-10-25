@@ -23,8 +23,8 @@ class Program
         instructors.Add(instructor2);
         instructors.Add(instructor3);
         Course course1 = new Course(100, "Python", instructor1);
-        Course course2 = new Course(100, "Advance programing", instructor1);
-        Course course3 = new Course(100, "Cloud computing", instructor1);
+        Course course2 = new Course(101, "Advance programing", instructor3);
+        Course course3 = new Course(102, "Cloud computing", instructor1);
         courses.Add(course1);
         courses.Add(course2);
         courses.Add(course3);
@@ -66,8 +66,9 @@ class Program
                     Console.Write("Enter course name: ");
                     string courseName = Console.ReadLine();     
                     Instructor newInstructor = getInstructor();
-                    Course newCourse = Course.CreateCourse(courseName, newInstructor);
+                    Course newCourse = Course.CreateCourse(courseName, newInstructor);                    
                     instructors.Add(newInstructor);
+                    newInstructor.insertCourseTaught(newCourse);
                     courses.Add(newCourse);
                     Console.WriteLine("Course added successfully.");
                     break;
@@ -268,7 +269,7 @@ class Program
                 Student newStudent = student.Edit();                
                 int index = students.IndexOf(student);
                 student = students.Find(s => s.Id == newStudent.Id);
-                if (student != null )
+                if ((student != null ) && (newStudent.Id != student.Id))
                 {                    
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Student ID already exist");
@@ -277,6 +278,9 @@ class Program
                 else if (index >= 0) 
                 {
                     students[index] = newStudent;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Student is edited.");
+                    Console.ResetColor();
                 }                
             }
             else
@@ -296,7 +300,7 @@ class Program
                 Instructor newInstructor = instructor.Edit();
                 int index = instructors.IndexOf(instructor);
                 instructor = instructors.Find(s => s.Id == newInstructor.Id);
-                if (instructor != null)
+                if ((instructor != null) && (newInstructor.Id != instructor.Id))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Instructor ID already exist");
@@ -305,6 +309,9 @@ class Program
                 if (index >= 0)
                 {
                     instructors[index] = newInstructor;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Instructor is edited.");
+                    Console.ResetColor();
                 }
                 
             }
@@ -325,19 +332,29 @@ class Program
                 Console.Write("New ID: ");
                 int id = int.Parse(Console.ReadLine());
                 Console.Write("New Name: ");
-                string name = Console.ReadLine();                
-                Course newCourse = new Course(id, name, getInstructor());
+                string name = Console.ReadLine();
+                Instructor newInstructor = getInstructor();
+                int check = instructors.IndexOf(newInstructor);
+                if (check == -1)
+                {
+                    instructors.Add(newInstructor);
+                }
+                Course newCourse = new Course(id, name, newInstructor);
                 int index = courses.IndexOf(course);
                 course = courses.Find(c => c.CourseID == newCourse.CourseID);
-                if (course != null)
+                if ((course != null) && (newCourse.CourseID != course.CourseID))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Course ID already exist");
                     Console.ResetColor();
                 }
-                if (index >= 0)
+                else if (index >= 0)
                 {
                     courses[index] = newCourse;
+                    newInstructor.insertCourseTaught(newCourse);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Course is edited.");
+                    Console.ResetColor();
                 }
             }
             else
@@ -372,7 +389,8 @@ class Program
         Console.ForegroundColor = ConsoleColor.Yellow;
         foreach (Course c in courses)
         {
-            Console.WriteLine($"ID: {c.CourseID}, Name: {c.CourseName}, Instructor: {c.Instructor}");
+            c.DisplayInfo();
+            Console.WriteLine();
         }
         Console.ResetColor();
     }

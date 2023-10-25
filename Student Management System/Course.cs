@@ -24,17 +24,18 @@ class Course
     
     public static Course CreateCourse( string courseName, Instructor instructor)
     {
-        courseID++;               
+        courseID++;                       
         return new Course(courseID, courseName, instructor);
     }
 
     public void DisplayInfo()
     {
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"Course ID: {CourseID}");
         Console.WriteLine($"Course Name: {CourseName}");
         if (Instructor != null)
         {
-            Console.WriteLine($"Instructor: {Instructor}");
+            Console.WriteLine($"Instructor: {Instructor.Name}");
         }
         else
             Console.WriteLine("Not assigned teacher yet");
@@ -43,6 +44,7 @@ class Course
         {
             Console.WriteLine($"- ID: {student.Id} name: {student.Name}");
         }
+        Console.ResetColor();
     }
 
     

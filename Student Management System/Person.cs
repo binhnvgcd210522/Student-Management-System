@@ -14,7 +14,7 @@ class Person
         ContactInfo = contactInfo;
     }
 
-    public void DisplayInfo()
+    public virtual void DisplayInfo()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");

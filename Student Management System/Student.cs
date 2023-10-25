@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 class Student : Person
 {    
@@ -27,7 +28,7 @@ class Student : Person
 
     public void ViewCourses()
     {
-        Console.WriteLine($"Student {Name} is enrolled in the following courses:");
+        Console.WriteLine($"Student {Name} is enrolled in the following Courses:");
         foreach (var course in Courses)
         {
             Console.WriteLine($"- {course.CourseName}");
@@ -61,7 +62,10 @@ class Student : Person
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
-        ViewCourses();
+        if (Courses.Any())
+        {
+            ViewCourses();            
+        }        
         Console.ResetColor();
     }
 }

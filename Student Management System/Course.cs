@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 class Course
@@ -31,19 +32,22 @@ class Course
     public void DisplayInfo()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Course ID: {CourseID}");
-        Console.WriteLine($"Course Name: {CourseName}");
+        Console.WriteLine($"Courses ID: {CourseID}");
+        Console.WriteLine($"Courses Name: {CourseName}");
         if (Instructor != null)
         {
             Console.WriteLine($"Instructor: {Instructor.Name}");
         }
         else
             Console.WriteLine("Not assigned teacher yet");
-        Console.WriteLine("Students:");
-        foreach (var student in Students)
+        if (Students.Any())
         {
-            Console.WriteLine($"- ID: {student.Id} name: {student.Name}");
-        }
+            Console.WriteLine("Students:");
+            foreach (var student in Students)
+            {
+                Console.WriteLine($"- ID: {student.Id} name: {student.Name}");
+            }
+        }        
         Console.ResetColor();
     }
 

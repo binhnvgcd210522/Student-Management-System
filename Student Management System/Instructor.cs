@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 class Instructor : Person
 {    
@@ -49,12 +50,14 @@ class Instructor : Person
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
-        Console.WriteLine("The Instructor is teaching these course: ");
-        foreach (Course course in coursesTaught)
+        if (coursesTaught.Any() )
         {
-            Console.WriteLine($"-{course.CourseName}");
-        }
-        Console.WriteLine();
+            Console.WriteLine("The Instructor is teaching these course: ");
+            foreach (Course course in coursesTaught)
+            {
+                Console.WriteLine($"-{course.CourseName}");                
+            }
+        }                
         Console.ResetColor();
     }
 

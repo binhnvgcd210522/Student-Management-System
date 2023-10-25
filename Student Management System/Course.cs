@@ -10,6 +10,7 @@ class Course
     public Instructor Instructor { get; set; }
     public List<Student> Students { get; set; } = new List<Student>();
 
+    static int courseID = 0;
     public Course(int courseID, string courseName, Instructor instructor)
     {
         CourseID = courseID;
@@ -19,9 +20,18 @@ class Course
 
     public void AddStudent(Student student)
     {       
-           Students.Add(student);              
+        Students.Add(student);              
     }
-    static int courseID = 0;
+
+    public void Remove(Student student)
+    {
+        Students.Remove(student);
+    }
+
+    public void Remove(Instructor instructor)
+    {
+        Instructor = null;        
+    }
     
     public static Course CreateCourse( string courseName, Instructor instructor)
     {
@@ -32,8 +42,8 @@ class Course
     public void DisplayInfo()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Courses ID: {CourseID}");
-        Console.WriteLine($"Courses Name: {CourseName}");
+        Console.WriteLine($"Course ID: {CourseID}");
+        Console.WriteLine($"Course Name: {CourseName}");
         if (Instructor != null)
         {
             Console.WriteLine($"Instructor: {Instructor.Name}");

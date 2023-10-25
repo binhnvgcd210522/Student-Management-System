@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 
 class Student : Person
 {    
@@ -28,7 +29,7 @@ class Student : Person
 
     public void ViewCourses()
     {
-        Console.WriteLine($"Student {Name} is enrolled in the following Courses:");
+        Console.WriteLine($"Student {Name} is enrolled in the following courses:");
         foreach (var course in Courses)
         {
             Console.WriteLine($"- {course.CourseName}");
@@ -53,7 +54,7 @@ class Student : Person
         int id = int.Parse(Console.ReadLine());
         Console.Write("Name: ");
         string name = Console.ReadLine();
-        Console.Write("ContactInfo");
+        Console.Write("ContactInfor: ");
         string contactInfo = Console.ReadLine();
         return new Student(id, name, contactInfo);
     }
@@ -61,11 +62,11 @@ class Student : Person
     public override void DisplayInfor()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfor}");
         if (Courses.Any())
         {
             ViewCourses();            
         }        
         Console.ResetColor();
-    }
+    }    
 }

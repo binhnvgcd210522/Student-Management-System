@@ -18,7 +18,6 @@ class Instructor : Person
         string name = Console.ReadLine();
         Console.Write("Enter instructor contact info: ");
         string contactInfo = Console.ReadLine();        
-
         return new Instructor(instructorID, name, contactInfo);
     }
     public Instructor Edit()
@@ -26,14 +25,14 @@ class Instructor : Person
         Console.WriteLine("--Edit instructor information--");
         Console.Write("New ID: ");
         int id = int.Parse(Console.ReadLine());
-        Console.WriteLine("New Name: ");
+        Console.Write("New Name: ");
         string name = Console.ReadLine();
-        Console.WriteLine("New ContactInfo");
+        Console.Write("New ContactInfor");
         string contactInfo = Console.ReadLine();
         return new Instructor(id, name, contactInfo);
     }
 
-    public void insertCourseTaught(Course course)
+    public void InsertCourseTaught(Course course)
     {   
         int index = coursesTaught.IndexOf(course);
         if (index == -1)
@@ -46,10 +45,15 @@ class Instructor : Person
         }
     }
 
+    public void Remove(Course course)
+    {
+        coursesTaught.Remove(course);
+    }
+
     public override void DisplayInfor()
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfor}");
         if (coursesTaught.Any() )
         {
             Console.WriteLine("The Instructor is teaching these course: ");
@@ -60,6 +64,4 @@ class Instructor : Person
         }                
         Console.ResetColor();
     }
-
-    
 }

@@ -189,7 +189,7 @@ class Program
             if (student != null)
             {
                 Console.WriteLine("Student Information:");
-                student.DisplayInfo();
+                student.DisplayInfor();
                 student.ViewCourses();
             }
             else
@@ -205,7 +205,7 @@ class Program
             if (instructor != null)
             {
                 Console.WriteLine("Instructor Information:");
-                instructor.DisplayInfo();
+                instructor.DisplayInfor();
             }
             else
             {                
@@ -263,7 +263,7 @@ class Program
             if (student != null)
             {
                 Console.WriteLine("Student Information:");
-                student.DisplayInfo();
+                student.DisplayInfor();
                 student.ViewCourses();
                 Student newStudent = student.Edit();                
                 int index = students.IndexOf(student);
@@ -295,7 +295,7 @@ class Program
             if (instructor != null)
             {
                 Console.WriteLine("Instructor Information:");
-                instructor.DisplayInfo();
+                instructor.DisplayInfor();
                 Instructor newInstructor = instructor.Edit();
                 int index = instructors.IndexOf(instructor);
                 instructor = instructors.Find(s => s.Id == newInstructor.Id);
@@ -377,12 +377,12 @@ class Program
         Console.WriteLine("Instructors:");
         foreach (Instructor i in instructors)
         {
-            i.DisplayInfo();
+            i.DisplayInfor();
         }
         Console.WriteLine("Students: ");
         foreach (Student s in students)
         {
-            s.DisplayInfo();
+            s.DisplayInfor();
         }
         Console.WriteLine("Courses: ");
         Console.ForegroundColor = ConsoleColor.Yellow;

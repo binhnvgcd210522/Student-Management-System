@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-class Person
+﻿abstract class Person
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -14,10 +11,5 @@ class Person
         ContactInfo = contactInfo;
     }
 
-    public void DisplayInfo()
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
-        Console.ResetColor();
-    }    
+    public abstract void DisplayInfor();
 }

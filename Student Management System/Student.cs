@@ -1,8 +1,7 @@
-﻿using Student_Management_System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-class Student : Person, EditPerson
+class Student : Person
 {    
     public List<Course> Courses { get; set; } = new List<Course>();
 
@@ -33,6 +32,7 @@ class Student : Person, EditPerson
         {
             Console.WriteLine($"- {course.CourseName}");
         }
+        Console.WriteLine();
     }
 
     public static Student CreateStudent()
@@ -55,5 +55,13 @@ class Student : Person, EditPerson
         Console.Write("ContactInfo");
         string contactInfo = Console.ReadLine();
         return new Student(id, name, contactInfo);
+    }
+
+    public override void DisplayInfor()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
+        ViewCourses();
+        Console.ResetColor();
     }
 }

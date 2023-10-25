@@ -1,8 +1,7 @@
-﻿using Student_Management_System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-class Instructor : Person, EditPerson
+class Instructor : Person
 {    
     public List<Course> coursesTaught { get; set; } = new List<Course>();
 
@@ -45,4 +44,19 @@ class Instructor : Person, EditPerson
             coursesTaught[index] = course;
         }
     }
+
+    public override void DisplayInfor()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Contact Info: {ContactInfo}");
+        Console.WriteLine("The Instructor is teaching these course: ");
+        foreach (Course course in coursesTaught)
+        {
+            Console.WriteLine($"-{course.CourseName}");
+        }
+        Console.WriteLine();
+        Console.ResetColor();
+    }
+
+    
 }

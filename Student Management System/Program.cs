@@ -240,7 +240,6 @@ class Program
     {
         Console.Write("Enter Object Type (Student/Instructor/Course): ");
         string objectType = Console.ReadLine();
-
         Console.Write("Enter Object ID: ");
         int objectID;
 

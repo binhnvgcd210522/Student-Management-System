@@ -5,12 +5,13 @@ using System.Reflection.Emit;
 
 class Student : Person
 {    
-    public List<Course> Courses { get; set; } = new List<Course>();
+    public List<Course> Courses { get; set; } = new List<Course>(); // ê hắn tạo ra list mới tức là mỗi khi edit hắn sẽ tạo ra 1 list mới, list cũ k liê nquan nữa, lỗi ở đây, bỏ đoạn sau new ok k
 
     public Student(int studentID, string name, string contactInfo) : base(studentID, name, contactInfo)
     {
-        
+        // h làm sao 
     }
+
     static int studentID = 0;
 
     public void EnrollInCourse(Course course)
@@ -47,16 +48,16 @@ class Student : Person
         return new Student(studentID, name, contactInfo);
     }
     
-    public Student Edit()
+    public void Edit()
     {
         Console.WriteLine("Edit information:");
-        Console.Write("ID: ");
-        int id = int.Parse(Console.ReadLine());
         Console.Write("Name: ");
         string name = Console.ReadLine();
         Console.Write("ContactInfor: ");
-        string contactInfo = Console.ReadLine();
-        return new Student(id, name, contactInfo);
+        string contactInfo = Console.ReadLine();        
+        this.Name = name; 
+        this.ContactInfor = contactInfo;     
+        
     }
 
     public override void DisplayInfor()

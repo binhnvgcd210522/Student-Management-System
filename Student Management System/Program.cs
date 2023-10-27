@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 class Program
 {
@@ -26,6 +27,7 @@ class Program
         Course course3 = new Course(102, "Cloud computing", instructor1);
         instructor1.InsertCourseTaught(course1);
         instructor1.InsertCourseTaught(course3);
+        instructor3.InsertCourseTaught(course2);
         courses.Add(course1);
         courses.Add(course2);
         courses.Add(course3);
@@ -245,11 +247,13 @@ class Program
             Instructor newInstructor = GetInstructor();
             Course newCourse = Course.CreateCourse(courseName, newInstructor);
             int check = instructors.IndexOf(newInstructor);
-            if ((check == -1) && (newInstructor !=null))
+            if ((check == -1) && (newInstructor != null))
             {
-                instructors.Add(newInstructor);
-                newInstructor.InsertCourseTaught(newCourse);
-            }                        
+                instructors.Add(newInstructor);                
+            }
+          
+            newInstructor.InsertCourseTaught(newCourse);
+
             courses.Add(newCourse);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Course added successfully.");
@@ -286,27 +290,15 @@ class Program
 
         if (objectType.Equals("Student", StringComparison.OrdinalIgnoreCase))
         {
-            Student student = students.Find(s => s.Id == objectID);
+            Student student = students.Where(s => s.Id == objectID).FirstOrDefault();
             if (student != null)
             {
                 Console.WriteLine("Student Information:");
-                student.DisplayInfor();                
-                Student newStudent = student.Edit();                
-                int index = students.IndexOf(student);
-                student = students.Find(s => s.Id == newStudent.Id);
-                if ((student != null ) && (newStudent.Id != student.Id))
-                {                    
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Student ID already exist");
-                    Console.ResetColor();
-                }
-                else if (index >= 0) 
-                {
-                    students[index] = newStudent;
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Student is edited.");
-                    Console.ResetColor();
-                }                
+                student.DisplayInfor(); // Show info              
+                student.Edit();                                   
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Student is edited.");
+                Console.ResetColor();                               
             }
             else
             {                
@@ -322,22 +314,10 @@ class Program
             {
                 Console.WriteLine("Instructor Information:");
                 instructor.DisplayInfor();
-                Instructor newInstructor = instructor.Edit();
-                int index = instructors.IndexOf(instructor);
-                instructor = instructors.Find(s => s.Id == newInstructor.Id);
-                if ((instructor != null) && (newInstructor.Id != instructor.Id))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Instructor ID already exist");
-                    Console.ResetColor();
-                }
-                if (index >= 0)
-                {
-                    instructors[index] = newInstructor;
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Instructor is edited.");
-                    Console.ResetColor();
-                }                
+                instructor.Edit();                                                
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Instructor is edited.");
+                Console.ResetColor();                               
             }
             else
             {
@@ -358,37 +338,39 @@ class Program
                 Console.Write("New Name: ");
                 string name = Console.ReadLine();
                 Instructor newInstructor = GetInstructor();
-                int check = instructors.IndexOf(newInstructor);
-                if (check == -1)
-                {
-                    instructors.Add(newInstructor);
-                }
-                Course newCourse = new Course(id, name, newInstructor);
-                int index = courses.IndexOf(course);
-                course = courses.Find(c => c.CourseID == newCourse.CourseID);                
-                if ((course != null) && (newCourse.CourseID != course.CourseID))
+                Course courseId = courses.Find(c => c.CourseID == id);       //check course exist yet         
+                if (courseId != null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Course ID already exist");
                     Console.ResetColor();
                 }
-                else if ((index >= 0))
+                else
                 {
-                    courses[index] = newCourse;
-                    if (newInstructor != null)
-                    {                        
-                        newInstructor.InsertCourseTaught(newCourse);
-                        newInstructor.Remove(course);
+                    int check = instructors.IndexOf(newInstructor);
+                    if (check == -1)
+                    {
+                        course.Instructor.Remove(course);
+                        instructors.Add(newInstructor);
+                        course.Edit(id, name, newInstructor);
+                        newInstructor.InsertCourseTaught(course);
+                    }
+                    else
+                    {
+                        course.Instructor.Remove(course);
+                        course.Edit(id, name, newInstructor);
+                        newInstructor.InsertCourseTaught(course);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("Course is edited.");
+                        Console.ResetColor();
                     }                    
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Course is edited.");
-                    Console.ResetColor();
                 }
+                
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("courses not found.");
+                Console.WriteLine("Course not found.");
                 Console.ResetColor();                
             }
         }
@@ -429,7 +411,7 @@ class Program
             {
                 foreach (Course course in student.Courses)
                 {
-                    course.Remove(student);
+                    course.Remove(student, students);
                 }
                 students.Remove(student);
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -469,7 +451,8 @@ class Program
             Course course = courses.Find(c => c.CourseID == objectID);
             if (course != null)
             {
-                courses.Remove(course);
+                course.Instructor.Remove(course);
+                courses.Remove(course);                
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Course is deleted");
                 Console.ResetColor();
@@ -477,7 +460,7 @@ class Program
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("courses not found.");
+                Console.WriteLine("Course not found.");
                 Console.ResetColor();
             }
         }
@@ -528,8 +511,7 @@ class Program
         {
             Console.WriteLine("--Insert instructor--");
             Console.WriteLine("1. Add new instructor.");
-            Console.WriteLine("2. Add available instructor.");
-            Console.WriteLine("3. Add later.");
+            Console.WriteLine("2. Add available instructor.");            
             Console.Write("Your choice: ");
             string choice = Console.ReadLine();
             switch (choice)
@@ -554,11 +536,7 @@ class Program
                         Console.ResetColor();
                         Console.WriteLine("Enter Instructor ID again: ");
                     }                                   
-                    break;
-                case "3":
-                    newInstructor = null;
-                    check = false;
-                    break;
+                    break;                
                 default:                    
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid choice. Please enter a valid option.");

@@ -20,16 +20,15 @@ class Instructor : Person
         string contactInfo = Console.ReadLine();        
         return new Instructor(instructorID, name, contactInfo);
     }
-    public Instructor Edit()
+    public void Edit()
     {
         Console.WriteLine("--Edit instructor information--");
-        Console.Write("New ID: ");
-        int id = int.Parse(Console.ReadLine());
         Console.Write("New Name: ");
         string name = Console.ReadLine();
-        Console.Write("New ContactInfor");
-        string contactInfo = Console.ReadLine();
-        return new Instructor(id, name, contactInfo);
+        Console.Write("New ContactInfor: ");
+        string contactInfor = Console.ReadLine();        
+        this.Name=name;
+        this.ContactInfor=contactInfor;
     }
 
     public void InsertCourseTaught(Course course)
@@ -59,8 +58,9 @@ class Instructor : Person
             Console.WriteLine("The Instructor is teaching these course: ");
             foreach (Course course in coursesTaught)
             {
-                Console.WriteLine($"-{course.CourseName}");                
+                Console.WriteLine($"- {course.CourseName}");                
             }
+            Console.WriteLine(); 
         }                
         Console.ResetColor();
     }

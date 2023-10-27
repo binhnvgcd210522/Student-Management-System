@@ -19,11 +19,11 @@ class Course
     }
 
     public void AddStudent(Student student)
-    {       
-        Students.Add(student);              
+    {        
+        Students.Add(student);
     }
 
-    public void Remove(Student student)
+    public void Remove(Student student, List<Student> students)
     {
         Students.Remove(student);
     }
@@ -37,6 +37,18 @@ class Course
     {
         courseID++;                       
         return new Course(courseID, courseName, instructor);
+    }
+
+    public void Edit(int id, string name, Instructor instructor)
+    {
+        this.CourseID = id;
+        this.CourseName = name;
+        this.Instructor = instructor;
+    }
+    public void Edit(int id, string name)
+    {
+        this.CourseID = id;
+        this.CourseName = name;        
     }
 
     public void DisplayInfo()
@@ -55,11 +67,9 @@ class Course
             Console.WriteLine("Students:");
             foreach (var student in Students)
             {
-                Console.WriteLine($"- ID: {student.Id} name: {student.Name}");
+                Console.WriteLine($"- Name: {student.Name}");
             }
         }        
         Console.ResetColor();
     }
-
-    
 }
